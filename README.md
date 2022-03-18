@@ -1,105 +1,78 @@
-<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
-<p align="center">
-  <a href="https://www.gatsbyjs.com">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
+# gatsby-theme-andy
+
+<p style="text-align:center;" align="center">
+<img src="https://github.com/aravindballa/gatsby-theme-andy/raw/master/andy-logo.png" alt="theme andy logo"  width="200" height="auto"/>
+<br/>
+<img alt="npm" src="https://img.shields.io/npm/v/gatsby-theme-andy">
 </p>
-<h1 align="center">
-  Gatsby's blog starter
-</h1>
 
-Kick off your project with this blog boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
+This is inspired by the work of [Andy](https://notes.andymatuschak.org/About_these_notes) and is based on [gatsby-theme-brain](https://github.com/aengusmcmillin/gatsby-theme-brain). Also uses [react-stacked-pages-hook](https://github.com/mathieudutour/gatsby-n-roamresearch/tree/master/packages/react-stacked-pages-hook) for staking up the notes side by side. And unleashes the power of [theme-ui](https://theme-ui.com/home) for easy themeable components.
 
-_Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
+Simple Demo - https://codesandbox.io/s/gatsby-theme-andy-demo-tnv6r
 
-## 🚀 Quick start
+[https://notes.aravindballa.com](https://notes.aravindballa.com/) uses this with a few custom components and custom styles.
 
-1.  **Create a Gatsby site.**
+## Getting started
 
-    Use the Gatsby CLI ([install instructions](https://www.gatsbyjs.com/docs/tutorial/part-0/#gatsby-cli)) to create a new site, specifying the blog starter.
+### From scratch
 
-    ```shell
-    # create a new Gatsby site using the blog starter
-    gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
-    ```
+- Create a new directory and from that directory, run `npm init`.
+- Add all the dependencies `yarn add gatsby react react-dom gatsby-theme-andy`.
+- Create a file `gatsby-config.js`. Now we add `gatsby-theme-andy` to plugins and a `title` in `siteMetadata` in that config.
 
-1.  **Start developing.**
+  ```js
+  module.exports = {
+    siteMetadata: {
+      title: 'My Notes',
+    },
+    plugins: [`gatsby-theme-andy`],
+  };
+  ```
 
-    Navigate into your new site’s directory and start it up.
+- Create directory `content` at root and add a few `md` files. We can use `[[]]` syntax to interlink the pages. Look at [this directory](./content) for an example.
+- Now we add these scripts below to `package.json` and run `yarn develop`.
 
-    ```shell
-    cd my-blog-starter/
-    gatsby develop
-    ```
+  ```json
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "clean": "gatsby clean"
+  },
+  ```
 
-1.  **Open the source code and start editing!**
+### Adding to an exsisting project
 
-    Your site is now running at `http://localhost:8000`!
+> _Coming soon_
 
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby Tutorial](https://www.gatsbyjs.com/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries)._
+## Configuration
 
-    Open the `my-blog-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+All the plugin options valid for [gatsby-theme-brain](https://github.com/aengusmcmillin/gatsby-theme-brain) can be given to this theme as well. Other than those, we have
 
-## 🚀 Quick start (Gatsby Cloud)
+| Option                       | Default Value | Description                                                    |
+| ---------------------------- | ------------- | -------------------------------------------------------------- |
+| `themeUIOtherwiseConfigured` | `false`       | Enable this if you have already setup theme-ui in your project |
 
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
+### Configuring the theme
 
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog)
+This project uses `theme-ui` which allows us to easily theme the site. You can customize the theme by adding a file at `./gatsby-theme-andy/theme.js`. The default values for the theme are at [src/theme.js](./src/theme.js). You can copy these to the new file you created and edit the values as you wish. 😎
 
-## 🧐 What's inside?
+<!-- TODO add example from notes.aravindballa.com after updating it -->
 
-A quick look at the top-level files and directories you'll see in a Gatsby project.
+### Shadowing components
 
-    .
-    ├── node_modules
-    ├── src
-    ├── .gitignore
-    ├── .prettierrc
-    ├── gatsby-browser.js
-    ├── gatsby-config.js
-    ├── gatsby-node.js
-    ├── gatsby-ssr.js
-    ├── LICENSE
-    ├── package-lock.json
-    ├── package.json
-    └── README.md
+You can shadow/override a few components for increased customizability. In your project, you would need to place them at `./gatsby-theme-andy/src/components`. ⚡️Have a look at the default components to see what `props` they get. Components you can override -
 
-1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
+| Component                                                       | Description                                                                                                                                                                               |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [BrainNote.js](./src/components/BrainNote.js)                   | This is the note page and it is responsible for collecting all the popups and passing them to the `MdxComponents.js`. It's really a cool way of doing it.                                 |
+| [BrainNoteContainer.js](./src/components/BrainNoteContainer.js) | This is the layout page that stacks up the notes side by side.                                                                                                                            |
+| [Popover.js](./src/components/Popover.js)                       | The component that pops up when you hover over an internal link.                                                                                                                          |
+| [Header.js](./src/components/Header.js)                         | The top bar of the website. If you just want to change the text, you can do it in `gatsby-config.js -> siteMetadata -> title`.                                                            |
+| [Footer.js](./src/components/Footer.js)                         | Footer that contains the `ReferredBlock` as well as the message at the bottom of the note.                                                                                                |
+| [RefererdBlock.js](./src/components/ReferredBlock.js)           | The block which contains all the references (Referred in section) to the note.                                                                                                            |
+| [Tippy.js](./src/components/Tippy.js)                           | This has the TippyJS configs. You can configure things like the [hover animations](https://atomiks.github.io/tippyjs/v6/animations/) here. Remember to change the css import as well.     |
+| [MdxComponents.js](./src/components/MdxComponents.js)           | This has a custom component `AnchorTag` which gets the popover as a prop and displays it when we hover over an internal link. If you wish to add extra MDX components, this is the place! |
 
-2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
+## Contribution
 
-3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
-
-4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
-
-5.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
-
-6.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/) for more detail).
-
-7.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
-
-8.  **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
-
-9.  **`LICENSE`**: This Gatsby starter is licensed under the 0BSD license. This means that you can see this file as a placeholder and replace it with your own license.
-
-10. **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
-
-11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
-
-12. **`README.md`**: A text file containing useful reference information about your project.
-
-## 🎓 Learning Gatsby
-
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/). Here are some places to start:
-
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
-
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
-
-## 💫 Deploy
-
-[Build, Deploy, and Host On The Only Cloud Built For Gatsby](https://www.gatsbyjs.com/products/cloud/)
-
-Gatsby Cloud is an end-to-end cloud platform specifically built for the Gatsby framework that combines a modern developer experience with an optimized, global edge network.
-
-<!-- AUTO-GENERATED-CONTENT:END -->
+This project is relatively new. Please report issues you face and yes, I'd be happy to accept PRs. 😉
